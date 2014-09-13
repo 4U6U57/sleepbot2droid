@@ -28,7 +28,7 @@ end
 
 # Parses raw SQLite database dumps from the SleepBot app.
 def parse_raw(row)
-  # Java timestamps: Unix timestamps, with ns resolution
+	# Java timestamps: Unix timestamps, with ns resolution
 	timestamp_from = row[1].to_f / 1000.0
 	timestamp_to = row[2].to_f / 1000.0
 	hours = (timestamp_to - timestamp_from) / 60 / 60
