@@ -3,8 +3,9 @@ require 'csv'
 # Parses CSV-exported data from SleepBot
 def parse_export(row)
 	# Parse the wake up date
-	date_to = row[0].split('/')
-	date_to = Time.new(2000 + date_to[2].to_i, date_to[1], date_to[0])
+	date_to = row[0].split('-')
+	p date_to
+	date_to = Time.new(date_to[2].to_i, date_to[1], date_to[0])
 	
 	# Parse the wake up/sleep times
 	time_from = row[1].split(':')
@@ -64,6 +65,6 @@ end
 CSV.open('sleepbot-converted.csv', 'wb') do |csv|
 	results.each do |result|
 		csv << ['Id',                  'Tz',             'From',                       'To',                         'Sched',                      'Hours',   'Rating',  'Comment', 'Framerate', 'Snore', 'Noise', 'Cycles', 'DeepSleep', 'LenAdjust', 'Geo', '%d:%d' % [result[1].hour, result[1].min], 'Event',                                      'Event']
-		csv << [result[0].to_i * 1000, 'Asia/Singapore', sleepandroid_time(result[0]), sleepandroid_time(result[1]), sleepandroid_time(result[1]), result[2], result[3], result[4], 10000,       -1,      -1,      -1,       -1,          0,           '',    0,                                         'DEEP_START-' + (result[0].to_i * 1000).to_s, 'DEEP_END-' + (result[0].to_i * 1000).to_s]
+		csv << [result[0].to_i * 1000, 'America/Los_Angeles', sleepandroid_time(result[0]), sleepandroid_time(result[1]), sleepandroid_time(result[1]), result[2], result[3], result[4], 10000,       -1,      -1,      -1,       -1,          0,           '',    0,                                         'DEEP_START-' + (result[0].to_i * 1000).to_s, 'DEEP_END-' + (result[0].to_i * 1000).to_s]
 	end
 end
